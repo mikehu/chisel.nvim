@@ -118,21 +118,31 @@ end
 function M.setup(opts)
 	config.setup(opts)
 
+	local subcommands = {
+		file = M.start_file,
+		abort = M.abort,
+		review = M.review,
+	}
+
 	vim.api.nvim_create_user_command("Chisel", function(cmd_opts)
-		M.start(cmd_opts.line1, cmd_opts.line2)
-	end, { range = true, desc = "Chisel inline edit" })
-
-	vim.api.nvim_create_user_command("ChiselFile", function()
-		M.start_file()
-	end, { desc = "Chisel file edit" })
-
-	vim.api.nvim_create_user_command("ChiselAbort", function()
-		M.abort()
-	end, { desc = "Abort chisel session" })
-
-	vim.api.nvim_create_user_command("ChiselReview", function()
-		M.review()
-	end, { desc = "Review last chisel response" })
+		local subcmd = vim.trim(cmd_opts.args)
+		if subcmd == "" then
+			M.start(cmd_opts.line1, cmd_opts.line2)
+		elseif subcommands[subcmd] then
+			subcommands[subcmd]()
+		else
+			vim.notify("chisel: unknown subcommand '" .. subcmd .. "'", vim.log.levels.ERROR)
+		end
+	end, {
+		range = true,
+		nargs = "?",
+		desc = "Chisel — surgical inline editing",
+		complete = function(arg_lead)
+			return vim.tbl_filter(function(s)
+				return s:find(arg_lead, 1, true) == 1
+			end, vim.tbl_keys(subcommands))
+		end,
+	})
 end
 
 return M

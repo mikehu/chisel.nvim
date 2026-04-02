@@ -12,7 +12,7 @@ The `lua/` directory at root is the standard Neovim plugin layout. `require("chi
 
 ## Architecture
 
-**Entry point** — `init.lua` exposes `setup()` (registers `:Chisel`, `:ChiselFile`, `:ChiselAbort`, `:ChiselReview` commands), `start()` (visual selection), `start_file()` (whole file), and manages the single active session.
+**Entry point** — `init.lua` exposes `setup()` (registers the `:Chisel` command with subcommands `file`, `abort`, `review`), `start()` (visual selection), `start_file()` (whole file), and manages the single active session.
 
 **Flow**: User command → `context.capture()` / `context.capture_file()` builds a context table → `Snacks.input` prompt → `session.start()` → `backend/claude.spawn()` → streams NDJSON → callbacks update fidget progress + extmark spinners → on completion, buffer is reloaded from disk (`vim.cmd("edit")`).
 

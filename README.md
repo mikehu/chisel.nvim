@@ -6,7 +6,7 @@ Select code, describe what you want, and chisel refines it in place — no chat 
 
 ## How It Works
 
-1. **Select** code in visual mode (or use `:ChiselFile` for whole-file context)
+1. **Select** code in visual mode (or use `:Chisel file` for whole-file context)
 2. **Describe** the change you want in plain English
 3. **Wait** — a spinner overlays the selected lines while the AI works
 4. **Done** — your file is updated in place
@@ -41,7 +41,7 @@ chisel delegates the actual editing to an AI CLI tool (currently Claude CLI, wit
   },
   keys = {
     { "<leader>ci", ":Chisel<CR>", mode = "v", desc = "Chisel selection" },
-    { "<leader>ci", ":ChiselFile<CR>", mode = "n", desc = "Chisel file" },
+    { "<leader>ci", ":Chisel file<CR>", mode = "n", desc = "Chisel file" },
   },
   config = function()
     require("chisel").setup()
@@ -80,9 +80,9 @@ require("chisel").setup({
 | Command | Description |
 |---|---|
 | `:Chisel` | Edit selected lines (visual mode) |
-| `:ChiselFile` | Edit with whole-file context (normal mode, cursor provides location hint) |
-| `:ChiselAbort` | Cancel the active session |
-| `:ChiselReview` | Toggle a float showing the last response |
+| `:Chisel file` | Edit with whole-file context (normal mode, cursor provides location hint) |
+| `:Chisel abort` | Cancel the active session |
+| `:Chisel review` | Toggle a float showing the last response |
 
 ## Backends
 

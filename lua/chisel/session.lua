@@ -4,7 +4,7 @@ local progress = require("fidget.progress")
 
 local M = {}
 
---- Last response text from a completed session (for :ChiselReview).
+--- Last response text from a completed session (for :Chisel review).
 --- @type string|nil
 M.last_response = nil
 
@@ -99,7 +99,7 @@ function M.start(ctx, prompt)
 					end)
 				end
 
-				-- Store for :ChiselReview
+				-- Store for :Chisel review
 				local text = vim.trim(session.result_text)
 				M.last_response = text ~= "" and text or nil
 
